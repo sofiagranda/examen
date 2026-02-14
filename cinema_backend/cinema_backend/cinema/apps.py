@@ -1,5 +1,12 @@
 from django.apps import AppConfig
 
-
 class CinemaConfig(AppConfig):
-    name = 'cinema'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "cinema"
+
+    def ready(self):
+        try:
+            from .mongo_service import ensure_indexes
+            ensure_indexes()
+        except Exception:
+            pass
